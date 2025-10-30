@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>☁️ Cloud Code Compiler</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      color: #e2e8f0;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #60a5fa;
+      text-shadow: 0 0 10px #1d4ed8;
+    }
+    .container {
+      margin: auto;
+      width: 90%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      backdrop-filter: blur(5px);
+    }
+    textarea {
+      width: 95%;
+      height: 240px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 12px;
+      transition: 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 10px #2563eb;
+    }
+    select, button {
+      padding: 10px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    select {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+    pre {
+      width: 95%;
+      margin: 20px auto;
+      text-align: left;
+      background: #0b0b0b;
+      color: #d6ffd6;
+      padding: 12px;
+      border-radius: 10px;
+      min-height: 100px;
+      font-size: 15px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .actions {
+      margin: 15px 0;
+    }
+    .actions button {
+      background: #10b981;
+    }
+    .actions button:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+  <h1>☁️ Cloud Code Compiler</h1>
+  <div class="container">
+    <div>
+      <select id="language">
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+        <option value="c">C</option>
+        <option value="java">Java</option>
+        <option value="javascript">JavaScript</option>
+      </select>
+
+      <button id="runBtn">▶️ Run</button>
+      <button id="exampleBtn">💡 Example</button>
+    </div>
+
+    <textarea id="code" placeholder="Write your code here...">print("Hello from Cloud Compiler!")</textarea>
+
+    <h3>Input (stdin)</h3>
+    <textarea id="stdin" style="height:80px" placeholder="Optional input for your program..."></textarea>
+
+    <div class="actions">
+      <button id="clearBtn">🧹 Clear</button>
+      <button id="copyBtn">📋 Copy Output</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="output">Program output will appear here...</pre>
+  </div>
+
+  <script>
+    const runBtn = document.getElementById('runBtn
