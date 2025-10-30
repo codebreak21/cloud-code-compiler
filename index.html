@@ -1,123 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>☁️ Cloud Code Compiler</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top left, #0f172a, #020617);
-      color: #e2e8f0;
+      background: #0e1323;
+      color: white;
+      font-family: 'Poppins', sans-serif;
       text-align: center;
-      padding: 30px;
+      padding: 20px;
     }
     h1 {
-      color: #60a5fa;
-      text-shadow: 0 0 10px #1d4ed8;
-    }
-    .container {
-      margin: auto;
-      width: 90%;
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-      padding: 20px;
-      backdrop-filter: blur(5px);
-    }
-    textarea {
-      width: 95%;
-      height: 240px;
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: 'Courier New', monospace;
-      font-size: 15px;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 12px;
-      transition: 0.3s;
-    }
-    textarea:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 10px #2563eb;
+      color: #63b3ff;
+      text-shadow: 0 0 10px #63b3ff;
     }
     select, button {
-      padding: 10px 20px;
+      padding: 10px 15px;
       margin: 8px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-weight: 600;
+    }
+    select {
+      background: #1b2338;
+      color: #fff;
+    }
+    button {
       cursor: pointer;
       transition: 0.2s;
     }
-    select {
-      background: #1e293b;
-      color: #f8fafc;
-    }
-    button {
-      background: #3b82f6;
-      color: white;
-      font-weight: bold;
-    }
-    button:hover {
-      background: #2563eb;
-      transform: scale(1.05);
+    #runBtn { background: #1d9bf0; color: white; }
+    #exampleBtn { background: #fbbf24; color: black; }
+    #clearBtn { background: #22c55e; color: white; }
+    #copyBtn { background: #e11d48; color: white; }
+
+    textarea {
+      width: 90%;
+      height: 200px;
+      margin: 10px 0;
+      background: #111827;
+      color: #00ffb3;
+      font-family: monospace;
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      padding: 10px;
+      font-size: 14px;
     }
     pre {
-      width: 95%;
-      margin: 20px auto;
-      text-align: left;
-      background: #0b0b0b;
-      color: #d6ffd6;
-      padding: 12px;
+      background: #000;
+      padding: 10px;
+      width: 90%;
       border-radius: 10px;
-      min-height: 100px;
-      font-size: 15px;
+      color: #00ffb3;
+      text-align: left;
       white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .actions {
-      margin: 15px 0;
-    }
-    .actions button {
-      background: #10b981;
-    }
-    .actions button:hover {
-      background: #059669;
     }
   </style>
 </head>
 <body>
   <h1>☁️ Cloud Code Compiler</h1>
-  <div class="container">
-    <div>
-      <select id="language">
-        <option value="python">Python</option>
-        <option value="cpp">C++</option>
-        <option value="c">C</option>
-        <option value="java">Java</option>
-        <option value="javascript">JavaScript</option>
-      </select>
 
-      <button id="runBtn">▶️ Run</button>
-      <button id="exampleBtn">💡 Example</button>
-    </div>
-
-    <textarea id="code" placeholder="Write your code here...">print("Hello from Cloud Compiler!")</textarea>
-
-    <h3>Input (stdin)</h3>
-    <textarea id="stdin" style="height:80px" placeholder="Optional input for your program..."></textarea>
-
-    <div class="actions">
-      <button id="clearBtn">🧹 Clear</button>
-      <button id="copyBtn">📋 Copy Output</button>
-    </div>
-
-    <h3>Output</h3>
-    <pre id="output">Program output will appear here...</pre>
+  <div>
+    <select id="language">
+      <option value="python">Python</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="java">Java</option>
+    </select>
+    <button id="runBtn">▶ Run</button>
+    <button id="exampleBtn">💡 Example</button>
   </div>
 
+  <textarea id="code">print("Hello from cloud!")</textarea>
+
+  <h3>Input (stdin)</h3>
+  <textarea id="stdin" style="height:80px;"></textarea>
+
+  <div>
+    <button id="clearBtn">🧹 Clear</button>
+    <button id="copyBtn">📋 Copy Output</button>
+  </div>
+
+  <h3>Output</h3>
+  <pre id="output">Program output will appear here...</pre>
+
   <script>
-    const runBtn = document.getElementById('runBtn
+    const runBtn = document.getElementById('runBtn');
+    const exampleBtn = document.getElementById('exampleBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    exampleBtn.addEventListener('click', () => {
+      const lang = document.getElementById('language').value;
+      let code = '', stdin = 'Ashutosh';
+      if (lang === 'python')
+        code = 'name = input()\\nprint("Hello", name)';
+      else if (lang === 'c')
+        code = '#include <stdio.h>\\nint main(){char s[50];scanf("%s",s);printf("Hello %s\\n",s);return 0;}';
+      else if (lang === 'cpp')
+        code = '#include <bits/stdc++.h>\\nusing namespace std;int main(){string s;cin>>s;cout<<"Hello "<<s<<"\\n";return 0;}';
+      else if (lang === 'java')
+        code = 'import java.util.*;class Main{public static void main(String[] args){Scanner sc=new Scanner(System.in);String s=sc.next();System.out.println("Hello "+s);}}';
+      document.getElementById('code').value = code;
+      document.getElementById('stdin').value = stdin;
+    });
+
+    runBtn.addEventListener('click', async () => {
+      const code = document.getElementById('code').value;
+      const language = document.getElementById('language').value;
+      const stdin = document.getElementById('stdin').value;
+      const output = document.getElementById('output');
+      output.innerText = "Running...";
+
+      try {
+        const resp = await fetch("https://emkc.org/api/v2/piston/execute", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            language: language,
+            version: "*",
+            files: [{ content: code }],
+            stdin: stdin
+          })
+        });
+
+        const data = await resp.json();
+        let out = "";
+        if (data.compile && data.compile.output) out += data.compile.output + "\\n";
+        if (data.run && data.run.output) out += data.run.output;
+        output.innerText = out || "No output.";
+      } catch (e) {
+        output.innerText = "Error: " + e.message;
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('code').value = "";
+      document.getElementById('stdin').value = "";
+      document.getElementById('output').innerText = "Cleared!";
+    });
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(document.getElementById('output').innerText);
+      alert("Output copied!");
+    });
+  </script>
+</body>
+</html>
